@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { PodcastsType } from '@/types/podcasts';
-import { useUpdatePodcastStatus } from '@/lib/queries/podcasts';
+import { useUpdatePodcast } from '@/lib/queries/podcasts';
 import { useToast } from '@/components/ui/use-toast';
 import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
@@ -22,7 +22,7 @@ function StatusSelect({ podcast }: Props) {
   const [value, setValue] = useState(String(podcast.status_id));
 
   const query = usePodcastStatuses();
-  const mutation = useUpdatePodcastStatus(podcast.id);
+  const mutation = useUpdatePodcast(podcast.id);
 
   const { toast } = useToast();
 

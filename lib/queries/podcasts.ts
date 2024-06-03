@@ -1,17 +1,8 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { supabaseClient } from '@/lib/supabase-clients/client';
 import { Database } from '@/types/supabase';
 import { insertPodcast } from '@/server/insert-podcast';
 import { updatePodcast } from '@/server/update-podcast';
-
-async function fetchPodcasts() {
-  return await supabaseClient
-    .from('podcasts')
-    .select()
-    .order('created_at', { ascending: false })
-    .throwOnError()
-    .then((r) => r.data);
-}
+import { fetchPodcasts } from '@/server/fetch-podcasts';
 
 export function usePodcasts() {
   return useQuery({
@@ -27,9 +18,9 @@ export function useCreatePodcast() {
   });
 }
 
-export function useUpdatePodcastStatus(podcastId: number) {
+export function useUpdatePodcast(podcastId: number) {
   return useMutation({
-    mutationKey: ['update-podcast-status'],
+    mutationKey: ['update-podcast'],
     mutationFn: (data: Database['public']['Tables']['podcasts']['Update']) =>
       updatePodcast({ data, podcastId }),
   });
