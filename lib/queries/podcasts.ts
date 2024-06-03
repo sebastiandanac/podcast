@@ -1,8 +1,17 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { supabaseClient } from '@/lib/supabase-clients/client';
 import { Database } from '@/types/supabase';
 import { insertPodcast } from '@/server/insert-podcast';
 import { updatePodcast } from '@/server/update-podcast';
-import { fetchPodcasts } from '@/server/fetch-podcasts';
+
+async function fetchPodcasts() {
+  return await supabaseClient
+    .from('podcasts')
+    .select()
+    .order('created_at', { ascending: false })
+    .throwOnError()
+    .then((r) => r.data);
+}
 
 export function usePodcasts() {
   return useQuery({
